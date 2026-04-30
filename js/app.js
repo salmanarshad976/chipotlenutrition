@@ -29,7 +29,7 @@ function route() {
         if (MENU_DATA[slug]) {
             currentMenuSlug = slug;
             renderMenuPage(app, slug);
-            document.title = `${MENU_DATA[slug].name} Nutrition Calculator - Calorie Counter & Nutrition Facts`;
+            document.title = MENU_DATA[slug].name + " Nutrition Calculator - Calorie Counter & Nutrition Facts";
         } else {
             renderHome(app);
         }
@@ -40,71 +40,94 @@ function route() {
     window.scrollTo(0, 0);
 }
 
+/* ── HOME PAGE ── */
+
 function renderHome(container) {
-    container.innerHTML = `
-        <div class="max-w-5xl mx-auto px-4 py-12">
-            <div class="text-center mb-12">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Chipotle Nutrition Calculator</h1>
-                <p class="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed">
-                    Calculate nutrition information for your favorite Chipotle meals with our free online tool.
-                    Select your ingredients to see calories, protein, carbs, fat, and other nutrition facts for bowls,
-                    burritos, salads, and more. Make healthier choices with instant nutrition data.
-                </p>
-            </div>
+    container.innerHTML =
+        '<div class="hero-gradient">' +
+            '<div class="max-w-6xl mx-auto px-4 pt-20 pb-16">' +
+                '<div class="text-center max-w-3xl mx-auto">' +
+                    '<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm mb-8" style="background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.2);color:#ff6b35;">' +
+                        '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>' +
+                        'Free Nutrition Calculator' +
+                    '</div>' +
+                    '<h1 class="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">Know What You\'re <span class="gradient-text">Eating</span></h1>' +
+                    '<p class="text-neutral-400 text-lg md:text-xl leading-relaxed mb-10">' +
+                        'Calculate calories, protein, carbs, and fat for every Chipotle menu item. ' +
+                        'Build your perfect meal and make smarter choices.' +
+                    '</p>' +
+                    '<a href="/menu/burrito-bowl" onclick="navigateTo(\'/menu/burrito-bowl\'); return false;" class="cta-btn text-lg">Start Building Your Meal</a>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
 
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-                ${MENU_ITEMS.map(item => `
-                    <a href="/menu/${item.slug}" onclick="navigateTo('/menu/${item.slug}'); return false;"
-                       aria-label="View ${item.name} nutrition"
-                       class="group block bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200">
-                        <div class="p-6">
-                            <div class="flex justify-center mb-4">
-                                <img src="${item.image}" alt="${item.name}"
-                                     class="w-full max-w-xs h-48 object-contain" loading="lazy">
-                            </div>
-                            <h2 class="text-xl font-bold text-gray-800 mb-2">${item.name}</h2>
-                            <span class="text-orange-500 group-hover:text-orange-600 font-medium text-sm transition-colors">
-                                View ${item.name} Nutrition facts &rarr;
-                            </span>
-                        </div>
-                    </a>
-                `).join("")}
-            </section>
+        '<div class="max-w-6xl mx-auto px-4 py-16">' +
+            '<div class="flex items-center justify-between mb-10">' +
+                '<div>' +
+                    '<h2 class="text-3xl font-bold text-white">Choose Your Meal</h2>' +
+                    '<p class="text-neutral-500 mt-2">Select a menu item to start calculating nutrition</p>' +
+                '</div>' +
+                '<div class="hidden md:flex items-center gap-2 text-neutral-500 text-sm">' +
+                    '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>' +
+                    MENU_ITEMS.length + ' menu types' +
+                '</div>' +
+            '</div>' +
 
-            <section class="max-w-3xl mx-auto">
-                <h2 class="text-3xl md:text-4xl font-bold text-red-600 text-center mb-3">Frequently Asked Questions</h2>
-                <p class="text-center text-gray-600 mb-8">Find answers to common questions about using our Chipotle Nutrition Calculator</p>
+            '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">' +
+                MENU_ITEMS.map(function(item) {
+                    return '<a href="/menu/' + item.slug + '" onclick="navigateTo(\'/menu/' + item.slug + '\'); return false;"' +
+                        ' aria-label="View ' + item.name + ' nutrition"' +
+                        ' class="glass-card rounded-2xl overflow-hidden group block">' +
+                            '<div class="p-6">' +
+                                '<div class="flex justify-center mb-5 h-44">' +
+                                    '<img src="' + item.image + '" alt="' + item.name + '"' +
+                                        ' class="h-full object-contain group-hover:scale-105 transition-transform duration-500" loading="lazy">' +
+                                '</div>' +
+                                '<div class="flex items-center justify-between">' +
+                                    '<div>' +
+                                        '<h3 class="font-bold text-white text-lg">' + item.name.replace("Chipotle ", "") + '</h3>' +
+                                        '<span class="text-neutral-500 text-sm">Nutrition Calculator</span>' +
+                                    '</div>' +
+                                    '<div class="w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-brand-500 transition-colors" style="background:rgba(255,255,255,0.06);">' +
+                                        '<svg class="w-5 h-5 text-neutral-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</a>';
+                }).join("") +
+            '</div>' +
 
-                <div class="space-y-4">
-                    ${FAQ_DATA.map((faq, i) => `
-                        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                            <button onclick="toggleFaq(${i})" class="w-full text-left px-6 py-5 flex items-center justify-between gap-4">
-                                <h3 class="font-bold text-gray-800 text-lg">${faq.q}</h3>
-                                <svg id="faq-icon-${i}" class="w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
-                            </button>
-                            <div id="faq-body-${i}" class="hidden px-6 pb-5">
-                                <p class="text-gray-600 leading-relaxed">${faq.a}</p>
-                            </div>
-                        </div>
-                    `).join("")}
-                </div>
+            renderFaqSection() +
+        '</div>';
+}
 
-                <div class="text-center mt-8">
-                    <a href="/" onclick="navigateTo('/'); return false;"
-                       class="inline-block bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors">
-                        Start Calculating Nutrition
-                    </a>
-                </div>
-            </section>
-        </div>
-    `;
+function renderFaqSection() {
+    return '<div class="max-w-3xl mx-auto">' +
+        '<div class="text-center mb-10">' +
+            '<h2 class="text-3xl font-bold text-white mb-3">Frequently Asked Questions</h2>' +
+            '<p class="text-neutral-500">Everything you need to know about using our calculator</p>' +
+        '</div>' +
+        '<div class="space-y-3">' +
+            FAQ_DATA.map(function(faq, i) {
+                return '<div class="faq-item">' +
+                    '<button onclick="toggleFaq(' + i + ')" class="w-full text-left px-6 py-5 flex items-center justify-between gap-4">' +
+                        '<h3 class="font-semibold text-white text-[15px]">' + faq.q + '</h3>' +
+                        '<svg id="faq-icon-' + i + '" class="w-5 h-5 text-neutral-500 flex-shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
+                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>' +
+                        '</svg>' +
+                    '</button>' +
+                    '<div id="faq-body-' + i + '" class="hidden px-6 pb-5">' +
+                        '<p class="text-neutral-400 leading-relaxed text-sm">' + faq.a + '</p>' +
+                    '</div>' +
+                '</div>';
+            }).join("") +
+        '</div>' +
+    '</div>';
 }
 
 function toggleFaq(index) {
-    const body = document.getElementById("faq-body-" + index);
-    const icon = document.getElementById("faq-icon-" + index);
+    var body = document.getElementById("faq-body-" + index);
+    var icon = document.getElementById("faq-icon-" + index);
     if (body.classList.contains("hidden")) {
         body.classList.remove("hidden");
         icon.style.transform = "rotate(180deg)";
@@ -114,78 +137,90 @@ function toggleFaq(index) {
     }
 }
 
+/* ── STATIC PAGES ── */
+
 function renderStaticPage(container, content) {
-    container.innerHTML = `
-        <div class="max-w-3xl mx-auto px-4 py-12">
-            <div class="bg-white rounded-xl border border-gray-200 p-8 md:p-12">
-                ${content}
-            </div>
-        </div>
-    `;
+    container.innerHTML =
+        '<div class="max-w-3xl mx-auto px-4 py-16">' +
+            '<div class="static-page section-card p-8 md:p-12">' +
+                content +
+            '</div>' +
+        '</div>';
 }
 
+/* ── MENU PAGE ── */
+
 function renderMenuPage(container, slug) {
-    const data = MENU_DATA[slug];
-    const otherMenus = MENU_ITEMS.filter(m => m.slug !== slug);
+    var data = MENU_DATA[slug];
+    var otherMenus = MENU_ITEMS.filter(function(m) { return m.slug !== slug; });
 
-    container.innerHTML = `
-        <div class="max-w-3xl mx-auto px-4 py-12">
-            <div class="text-center mb-8">
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">${data.name} Nutrition Calculator</h1>
-                <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                    Calculate nutrition information for your favorite ${data.name} meals with our free online tool.
-                    Select your ingredients to see calories, protein, carbs, fat, and other nutrition facts for bowls,
-                    burritos, salads, and more. Make healthier choices with instant nutrition data.
-                </p>
-            </div>
+    var sectionsHtml = data.sections.map(function(section, si) {
+        return renderSection(section, si, slug);
+    }).join("");
 
-            <div class="flex justify-center mb-10">
-                <img src="${data.heroImage}" alt="${data.name}" class="max-w-md w-full object-contain" loading="eager">
-            </div>
+    var otherMenusHtml = otherMenus.map(function(m) {
+        return '<a href="/menu/' + m.slug + '" onclick="navigateTo(\'/menu/' + m.slug + '\'); return false;"' +
+            ' aria-label="View ' + m.name + ' nutrition calculator"' +
+            ' class="other-menu-card">' +
+                '<img src="' + m.image + '" alt="' + m.name + '" class="w-full h-20 object-contain mb-3" loading="lazy">' +
+                '<div class="text-sm text-neutral-400">' + m.name.replace("Chipotle ", "") + '</div>' +
+            '</a>';
+    }).join("");
 
-            <div id="menu-sections" class="space-y-8">
-                ${data.sections.map((section, si) => renderSection(section, si, slug)).join("")}
-            </div>
+    container.innerHTML =
+        '<div class="hero-gradient">' +
+            '<div class="max-w-3xl mx-auto px-4 pt-12 pb-8">' +
+                '<nav class="breadcrumb text-sm text-neutral-500 mb-8">' +
+                    '<a href="/" onclick="navigateTo(\'/\'); return false;" aria-label="Go to Home">Home</a>' +
+                    '<span class="mx-2 text-neutral-600">/</span>' +
+                    '<span class="text-neutral-400">' + data.name.replace("Chipotle ", "") + '</span>' +
+                '</nav>' +
 
-            <section class="mt-16">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Other Menu & Nutrition Calculator</h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    ${otherMenus.map(m => `
-                        <a href="/menu/${m.slug}" onclick="navigateTo('/menu/${m.slug}'); return false;"
-                           aria-label="View ${m.name} nutrition calculator"
-                           class="group bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md hover:border-gray-300 transition-all text-center">
-                            <img src="${m.image}" alt="${m.name}" class="w-full h-24 object-contain mb-2" loading="lazy">
-                            <div class="text-sm text-gray-600 group-hover:text-gray-800 transition-colors">${m.name} Nutrition Calculator nutrition calculator</div>
-                        </a>
-                    `).join("")}
-                </div>
-            </section>
+                '<div class="flex flex-col md:flex-row items-center gap-8 mb-12">' +
+                    '<div class="flex-shrink-0">' +
+                        '<img src="' + data.heroImage + '" alt="' + data.name + '" class="w-48 md:w-64 object-contain" loading="eager">' +
+                    '</div>' +
+                    '<div>' +
+                        '<h1 class="text-3xl md:text-4xl font-black text-white mb-3">' + data.name.replace("Chipotle ", "") + ' <span class="gradient-text">Calculator</span></h1>' +
+                        '<p class="text-neutral-400 leading-relaxed">' +
+                            'Select your ingredients below to calculate the total nutrition for your ' + data.name.replace("Chipotle ", "").toLowerCase() + '. ' +
+                            'Tap any item to add it to your meal.' +
+                        '</p>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
 
-            <nav aria-label="Breadcrumb" class="mt-8 text-sm text-gray-500">
-                <a href="/" onclick="navigateTo('/'); return false;" aria-label="Go to Home" class="text-blue-600 hover:text-blue-800">Home</a>
-                <span class="mx-1">/</span>
-                <span>${data.name.replace("Chipotle ", "")}</span>
-            </nav>
-        </div>
-    `;
+        '<div class="max-w-3xl mx-auto px-4 pb-16">' +
+            '<div id="menu-sections" class="space-y-6">' +
+                sectionsHtml +
+            '</div>' +
+
+            '<div class="mt-16">' +
+                '<h2 class="text-2xl font-bold text-white mb-6">Other Calculators</h2>' +
+                '<div class="grid grid-cols-2 md:grid-cols-3 gap-4">' +
+                    otherMenusHtml +
+                '</div>' +
+            '</div>' +
+        '</div>';
 }
 
 function renderSection(section, sectionIndex, slug) {
-    return `
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <div class="mb-4">
-                <h2 class="text-2xl font-semibold text-gray-800 uppercase">${section.title}</h2>
-                ${section.subtitle ? '<p class="text-sm text-gray-600 mt-1">' + section.subtitle + '</p>' : ""}
-            </div>
-            <div class="space-y-3">
-                ${section.items.map((item, ii) => {
-                    const key = sectionIndex + "-" + ii;
-                    itemDataMap[key] = item;
-                    return renderIngredientRow(item, key);
-                }).join("")}
-            </div>
-        </div>
-    `;
+    var itemsHtml = section.items.map(function(item, ii) {
+        var key = sectionIndex + "-" + ii;
+        itemDataMap[key] = item;
+        return renderIngredientRow(item, key);
+    }).join("");
+
+    return '<div class="section-card p-5 md:p-6">' +
+        '<div class="mb-4">' +
+            '<h2 class="text-lg font-bold text-white uppercase tracking-wide">' + section.title + '</h2>' +
+            (section.subtitle ? '<p class="text-sm text-neutral-500 mt-1">' + section.subtitle + '</p>' : '') +
+        '</div>' +
+        '<div class="space-y-2">' +
+            itemsHtml +
+        '</div>' +
+    '</div>';
 }
 
 function escapeAttr(s) {
@@ -193,54 +228,33 @@ function escapeAttr(s) {
 }
 
 function renderIngredientRow(item, key) {
-    return `
-        <div id="item-${key}" class="cursor-pointer select-none transition-all duration-200 rounded-lg hover:ring-1 hover:ring-gray-300"
-             role="button" tabindex="0" aria-pressed="false"
-             onclick="toggleItem('${key}')"
-             onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleItem('${key}');}">
-            <div class="border rounded-lg p-4 transition-colors bg-white border-gray-200" id="item-border-${key}">
-                <div class="flex items-center gap-4">
-                    <div class="flex-shrink-0">
-                        <div id="item-check-${key}" class="w-5 h-5 md:w-6 md:h-6 rounded border-2 flex items-center justify-center transition-colors shadow-sm bg-white border-gray-300">
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <img src="${item.image}" alt="${escapeAttr(item.name)}" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded-md" loading="lazy">
-                    </div>
-                    <div class="flex-grow min-w-0">
-                        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
-                            <div class="flex-grow min-w-0">
-                                <h3 class="font-semibold text-lg text-gray-800 truncate">${escapeAttr(item.name)}</h3>
-                                ${item.subtitle ? '<p class="text-sm text-gray-500">' + escapeAttr(item.subtitle) + '</p>' : ""}
-                                <div id="item-portion-${key}" class="hidden mt-2"></div>
-                            </div>
-                            <div class="flex-shrink-0">
-                                <div class="flex flex-wrap gap-4 text-sm" id="item-nutrition-${key}">
-                                    <div class="flex flex-col items-center bg-orange-50 rounded-lg px-3 py-2 min-w-[60px]">
-                                        <span class="font-bold text-orange-600">${item.cal}</span>
-                                        <span class="text-xs text-gray-600">Calories</span>
-                                    </div>
-                                    <div class="flex flex-col items-center bg-blue-50 rounded-lg px-3 py-2 min-w-[60px]">
-                                        <span class="font-bold text-blue-600">${item.fat}g</span>
-                                        <span class="text-xs text-gray-600">Fat</span>
-                                    </div>
-                                    <div class="flex flex-col items-center bg-green-50 rounded-lg px-3 py-2 min-w-[60px]">
-                                        <span class="font-bold text-green-600">${item.protein}g</span>
-                                        <span class="text-xs text-gray-600">Protein</span>
-                                    </div>
-                                    <div class="flex flex-col items-center bg-purple-50 rounded-lg px-3 py-2 min-w-[60px]">
-                                        <span class="font-bold text-purple-600">${item.carbs}g</span>
-                                        <span class="text-xs text-gray-600">Carbs</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
+    return '<div id="item-' + key + '" class="ingredient-card cursor-pointer select-none p-4"' +
+        ' role="button" tabindex="0" aria-pressed="false"' +
+        ' onclick="toggleItem(\'' + key + '\')"' +
+        ' onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();toggleItem(\'' + key + '\');}">' +
+        '<div class="flex items-center gap-4">' +
+            '<div class="custom-check" id="item-check-' + key + '"></div>' +
+            '<img src="' + item.image + '" alt="' + escapeAttr(item.name) + '" class="w-14 h-14 md:w-16 md:h-16 object-cover rounded-lg flex-shrink-0" loading="lazy">' +
+            '<div class="flex-grow min-w-0">' +
+                '<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">' +
+                    '<div class="flex-grow min-w-0">' +
+                        '<h3 class="font-semibold text-white text-[15px] truncate">' + escapeAttr(item.name) + '</h3>' +
+                        (item.subtitle ? '<p class="text-xs text-neutral-500">' + escapeAttr(item.subtitle) + '</p>' : '') +
+                        '<div id="item-portion-' + key + '" class="hidden mt-2"></div>' +
+                    '</div>' +
+                    '<div class="flex flex-wrap gap-2 flex-shrink-0">' +
+                        '<div class="nutrition-pill cal"><span class="value text-xs font-bold">' + item.cal + '</span><div class="label text-[10px] text-neutral-500">Cal</div></div>' +
+                        '<div class="nutrition-pill fat"><span class="value text-xs font-bold">' + item.fat + 'g</span><div class="label text-[10px] text-neutral-500">Fat</div></div>' +
+                        '<div class="nutrition-pill pro"><span class="value text-xs font-bold">' + item.protein + 'g</span><div class="label text-[10px] text-neutral-500">Pro</div></div>' +
+                        '<div class="nutrition-pill carb"><span class="value text-xs font-bold">' + item.carbs + 'g</span><div class="label text-[10px] text-neutral-500">Carb</div></div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+    '</div>';
 }
+
+/* ── SELECTION LOGIC ── */
 
 function toggleItem(key) {
     var item = itemDataMap[key];
@@ -257,64 +271,50 @@ function toggleItem(key) {
 }
 
 function setItemSelected(key, item) {
-    var border = document.getElementById("item-border-" + key);
+    var card = document.getElementById("item-" + key);
     var check = document.getElementById("item-check-" + key);
     var portion = document.getElementById("item-portion-" + key);
-    var row = document.getElementById("item-" + key);
 
-    if (border) {
-        border.classList.remove("border-gray-200", "bg-white");
-        border.classList.add("border-orange-400", "bg-orange-50");
-    }
+    if (card) card.classList.add("selected");
     if (check) {
-        check.classList.remove("bg-white", "border-gray-300");
-        check.classList.add("bg-orange-500", "border-orange-500");
+        check.classList.add("checked");
         check.innerHTML = '<svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>';
     }
-    if (row) {
-        row.setAttribute("aria-pressed", "true");
-    }
+    if (card) card.setAttribute("aria-pressed", "true");
 
     if (item.allowDouble && portion) {
         portion.classList.remove("hidden");
-        portion.innerHTML = '<div class="flex items-center gap-3 text-sm" onclick="event.stopPropagation();">' +
-            '<div class="flex items-center gap-1">' +
-            '<button onclick="event.stopPropagation(); setPortion(\'' + key + '\', \'normal\');" id="portion-normal-' + key + '" class="w-5 h-5 rounded-full border-2 flex items-center justify-center border-orange-500 bg-orange-500">' +
-            '<svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>' +
-            '</button>' +
-            '<label class="cursor-pointer" onclick="event.stopPropagation(); setPortion(\'' + key + '\', \'normal\');">Normal</label>' +
-            '</div>' +
-            '<div class="flex items-center gap-1">' +
-            '<button onclick="event.stopPropagation(); setPortion(\'' + key + '\', \'double\');" id="portion-double-' + key + '" class="w-5 h-5 rounded-full border-2 flex items-center justify-center border-gray-300 bg-white">' +
-            '</button>' +
-            '<label class="cursor-pointer" onclick="event.stopPropagation(); setPortion(\'' + key + '\', \'double\');">Double</label>' +
-            '</div>' +
+        portion.innerHTML =
+            '<div class="flex items-center gap-4 text-sm" onclick="event.stopPropagation();">' +
+                '<div class="flex items-center gap-1.5 cursor-pointer" onclick="event.stopPropagation(); setPortion(\'' + key + '\', \'normal\');">' +
+                    '<div class="portion-radio active" id="portion-normal-' + key + '">' +
+                        '<div class="w-2 h-2 rounded-full bg-white"></div>' +
+                    '</div>' +
+                    '<span class="text-neutral-300 text-xs">Normal</span>' +
+                '</div>' +
+                '<div class="flex items-center gap-1.5 cursor-pointer" onclick="event.stopPropagation(); setPortion(\'' + key + '\', \'double\');">' +
+                    '<div class="portion-radio" id="portion-double-' + key + '"></div>' +
+                    '<span class="text-neutral-300 text-xs">Double</span>' +
+                '</div>' +
             '</div>';
     }
 }
 
 function setItemUnselected(key) {
-    var border = document.getElementById("item-border-" + key);
+    var card = document.getElementById("item-" + key);
     var check = document.getElementById("item-check-" + key);
     var portion = document.getElementById("item-portion-" + key);
-    var row = document.getElementById("item-" + key);
 
-    if (border) {
-        border.classList.remove("border-orange-400", "bg-orange-50");
-        border.classList.add("border-gray-200", "bg-white");
-    }
+    if (card) card.classList.remove("selected");
     if (check) {
-        check.classList.remove("bg-orange-500", "border-orange-500");
-        check.classList.add("bg-white", "border-gray-300");
+        check.classList.remove("checked");
         check.innerHTML = "";
     }
     if (portion) {
         portion.classList.add("hidden");
         portion.innerHTML = "";
     }
-    if (row) {
-        row.setAttribute("aria-pressed", "false");
-    }
+    if (card) card.setAttribute("aria-pressed", "false");
 }
 
 function setPortion(key, portion) {
@@ -326,26 +326,28 @@ function setPortion(key, portion) {
 
     if (portion === "normal") {
         if (normalBtn) {
-            normalBtn.className = "w-5 h-5 rounded-full border-2 flex items-center justify-center border-orange-500 bg-orange-500";
-            normalBtn.innerHTML = '<svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>';
+            normalBtn.className = "portion-radio active";
+            normalBtn.innerHTML = '<div class="w-2 h-2 rounded-full bg-white"></div>';
         }
         if (doubleBtn) {
-            doubleBtn.className = "w-5 h-5 rounded-full border-2 flex items-center justify-center border-gray-300 bg-white";
+            doubleBtn.className = "portion-radio";
             doubleBtn.innerHTML = "";
         }
     } else {
         if (doubleBtn) {
-            doubleBtn.className = "w-5 h-5 rounded-full border-2 flex items-center justify-center border-orange-500 bg-orange-500";
-            doubleBtn.innerHTML = '<svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>';
+            doubleBtn.className = "portion-radio active";
+            doubleBtn.innerHTML = '<div class="w-2 h-2 rounded-full bg-white"></div>';
         }
         if (normalBtn) {
-            normalBtn.className = "w-5 h-5 rounded-full border-2 flex items-center justify-center border-gray-300 bg-white";
+            normalBtn.className = "portion-radio";
             normalBtn.innerHTML = "";
         }
     }
 
     updateNutritionBar();
 }
+
+/* ── NUTRITION BAR ── */
 
 function updateNutritionBar() {
     var bar = document.getElementById("nutrition-bar");
@@ -400,6 +402,7 @@ function clearAllSelections() {
     updateNutritionBar();
 }
 
-window.addEventListener("popstate", route);
+/* ── INIT ── */
 
+window.addEventListener("popstate", route);
 route();

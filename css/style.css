@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 * {
     box-sizing: border-box;
 }
@@ -7,9 +9,11 @@ html {
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: #0f0f0f;
+    color: #e5e5e5;
 }
 
 img {
@@ -17,17 +21,250 @@ img {
     height: auto;
 }
 
-#nutrition-bar {
-    transition: transform 0.3s ease-in-out;
+/* Gradient text utility */
+.gradient-text {
+    background: linear-gradient(135deg, #ff6b35 0%, #f7c948 50%, #ff6b35 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s ease infinite;
 }
 
+@keyframes shimmer {
+    0% { background-position: 0% center; }
+    50% { background-position: 200% center; }
+    100% { background-position: 0% center; }
+}
+
+/* Glass card */
+.glass-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 107, 53, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 107, 53, 0.08);
+}
+
+/* Ingredient card styles */
+.ingredient-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    transition: all 0.25s ease;
+}
+
+.ingredient-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.ingredient-card.selected {
+    background: rgba(255, 107, 53, 0.08);
+    border-color: rgba(255, 107, 53, 0.4);
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.1);
+}
+
+/* Section card */
+.section-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+}
+
+/* Nutrition pill */
+.nutrition-pill {
+    border-radius: 8px;
+    padding: 6px 10px;
+    min-width: 56px;
+    text-align: center;
+}
+
+.nutrition-pill.cal { background: rgba(255, 107, 53, 0.12); }
+.nutrition-pill.cal .value { color: #ff6b35; }
+.nutrition-pill.fat { background: rgba(59, 130, 246, 0.12); }
+.nutrition-pill.fat .value { color: #60a5fa; }
+.nutrition-pill.pro { background: rgba(34, 197, 94, 0.12); }
+.nutrition-pill.pro .value { color: #4ade80; }
+.nutrition-pill.carb { background: rgba(168, 85, 247, 0.12); }
+.nutrition-pill.carb .value { color: #c084fc; }
+
+/* Checkbox */
+.custom-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.custom-check.checked {
+    background: #ff6b35;
+    border-color: #ff6b35;
+    box-shadow: 0 0 12px rgba(255, 107, 53, 0.4);
+}
+
+/* Portion radio */
+.portion-radio {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.portion-radio.active {
+    border-color: #ff6b35;
+    background: #ff6b35;
+}
+
+/* Nutrition bar */
+#nutrition-bar {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 107, 53, 0.3);
+}
+
+/* FAQ accordion */
+.faq-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.faq-item:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Hero gradient */
+.hero-gradient {
+    background: radial-gradient(ellipse at 50% 0%, rgba(255, 107, 53, 0.15) 0%, transparent 60%);
+}
+
+/* CTA button */
+.cta-btn {
+    background: linear-gradient(135deg, #ff6b35 0%, #e85d26 100%);
+    color: white;
+    font-weight: 700;
+    padding: 14px 36px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+}
+
+.cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 107, 53, 0.5);
+}
+
+/* Footer */
+footer {
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Other menus grid card */
+.other-menu-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: all 0.25s ease;
+}
+
+.other-menu-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 107, 53, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Breadcrumb */
+.breadcrumb a {
+    color: #ff6b35;
+    transition: color 0.2s ease;
+}
+.breadcrumb a:hover {
+    color: #f7c948;
+}
+
+/* Clear all button */
+.clear-btn {
+    color: #ff6b35;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+.clear-btn:hover {
+    color: #f7c948;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0f0f0f;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Mobile responsive */
 @media (max-width: 640px) {
-    #nutrition-bar .flex.gap-4.text-sm {
-        gap: 0.5rem;
+    #nutrition-bar .nutrition-pill {
+        min-width: 48px;
+        padding: 4px 8px;
     }
-    #nutrition-bar .min-w-\[60px\] {
-        min-width: 50px;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
+    .nutrition-pill .value {
+        font-size: 0.8rem;
     }
+    .nutrition-pill .label {
+        font-size: 0.6rem;
+    }
+}
+
+/* Link styles for static pages */
+.static-page a {
+    color: #ff6b35;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.static-page a:hover {
+    color: #f7c948;
+}
+.static-page h1,
+.static-page h2,
+.static-page h3 {
+    color: #fff;
+}
+.static-page p,
+.static-page li {
+    color: #a3a3a3;
+    line-height: 1.8;
 }
