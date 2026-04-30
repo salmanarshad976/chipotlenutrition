@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chipotle Nutrition Calculator - Free Calorie Counter &amp; Nutrition Facts Tool</title>
+    <meta name="description" content="Calculate nutrition information for your favorite Chipotle meals with our free online tool. Select your ingredients to see calories, protein, carbs, fat, and other nutrition facts.">
+    <link rel="canonical" href="https://chipotlenutrition.org/">
+    <meta property="og:title" content="Chipotle Nutrition Calculator">
+    <meta property="og:description" content="Calculate nutrition information for your favorite Chipotle meals with our free online tool.">
+    <meta property="og:site_name" content="Chipotle Nutrition Calculator">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#ff6b35',
+                            600: '#e85d26',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        },
+                        surface: {
+                            DEFAULT: '#0f0f0f',
+                            50: '#1a1a1a',
+                            100: '#222222',
+                            200: '#2a2a2a',
+                            300: '#333333',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="sticky top-0 z-50" style="background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group" aria-label="Chipotle Nutrition Home" onclick="navigateTo('/'); return false;">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #ff6b35, #e85d26);">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <span class="font-bold text-lg text-white group-hover:text-brand-500 transition-colors">Chipotle Nutrition</span>
+            </a>
+            <a href="https://chipotlenutrition.org/Chipotle-Nutrition-Facts.pdf" target="_blank" rel="noopener" class="hidden md:flex items-center gap-2 text-neutral-400 hover:text-brand-500 text-sm transition-colors" aria-label="View PDF Menu">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <span>Nutrition Facts PDF</span>
+            </a>
+        </div>
+    </header>
+
+    <main id="app" class="flex-grow">
+    </main>
+
+    <footer class="mt-16">
+        <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-neutral-500">
+            <span>&copy; 2025 Chipotle Nutrition Calculator. All rights reserved.</span>
+            <div class="flex gap-6">
+                <a href="/terms" onclick="navigateTo('/terms'); return false;" class="hover:text-brand-500 transition-colors">Terms</a>
+                <a href="/privacy" onclick="navigateTo('/privacy'); return false;" class="hover:text-brand-500 transition-colors">Privacy</a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="nutrition-bar" class="fixed bottom-0 left-0 right-0 transform translate-y-full z-50" style="display:none;">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <span id="selected-count" class="text-sm text-neutral-400">0 items selected</span>
+                <button id="clear-all-btn" class="clear-btn text-sm" onclick="clearAllSelections()">Clear All</button>
+            </div>
+            <div class="flex gap-3 text-sm">
+                <div class="nutrition-pill cal">
+                    <span id="total-calories" class="value font-bold text-sm">0</span>
+                    <div class="label text-[10px] text-neutral-500 mt-0.5">Calories</div>
+                </div>
+                <div class="nutrition-pill fat">
+                    <span id="total-fat" class="value font-bold text-sm">0g</span>
+                    <div class="label text-[10px] text-neutral-500 mt-0.5">Fat</div>
+                </div>
+                <div class="nutrition-pill pro">
+                    <span id="total-protein" class="value font-bold text-sm">0g</span>
+                    <div class="label text-[10px] text-neutral-500 mt-0.5">Protein</div>
+                </div>
+                <div class="nutrition-pill carb">
+                    <span id="total-carbs" class="value font-bold text-sm">0g</span>
+                    <div class="label text-[10px] text-neutral-500 mt-0.5">Carbs</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/nutrition-data.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
