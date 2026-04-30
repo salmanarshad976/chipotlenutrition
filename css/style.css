@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+#nutrition-bar {
+    transition: transform 0.3s ease-in-out;
+}
+
+@media (max-width: 640px) {
+    #nutrition-bar .flex.gap-4.text-sm {
+        gap: 0.5rem;
+    }
+    #nutrition-bar .min-w-\[60px\] {
+        min-width: 50px;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
