@@ -26,7 +26,7 @@ function route() {
         document.title = "Privacy Policy - Chipotle Nutrition Calculator";
     } else if (path.startsWith("/menu/")) {
         const slug = path.replace("/menu/", "");
-        if (MENU_DATA[slug]) {
+        if (MENU_DATA.hasOwnProperty(slug)) {
             currentMenuSlug = slug;
             renderMenuPage(app, slug);
             document.title = MENU_DATA[slug].name + " Nutrition Calculator - Calorie Counter & Nutrition Facts";
